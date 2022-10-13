@@ -1,8 +1,9 @@
 # LPIC-1: Chapter 1: Exploring Linux Command-Line Tools
 
+## ========================= COURSE =======================
 ***Cert Prep: LPIC-1 Exam 101 (Version 5.0)*** : Part 7 & 9
 
-## ========================= Main =========================
+## ========================= MAIN =========================
 
 ```bash
 mkdir newdir && cd newdir || echo "create dir failed!"
@@ -92,7 +93,7 @@ Backreference:
 (ss).*\1
 ```
 
-## ========================= Files =========================
+## ========================= FILES ========================
 
 ```bash
 /etc/profile
@@ -102,7 +103,7 @@ Backreference:
 /etc/bashrc
 ```
 
-## ========================= More Practice =================
+## ========================= PRACTICE ====================
 
 ```bash
 less
