@@ -1,8 +1,9 @@
-## LPIC-1: Chapter 1: Exploring Linux Command-Line Tools
+# LPIC-1: Chapter 1: Exploring Linux Command-Line Tools
 
-
+```bash
 mkdir newdir && cd newdir || echo "create dir failed!"
 { echo Hello ; echo Hi; } > tmp
+
 a=0; ( a=10; echo in=$a; ) ; echo out=$a
 a=0; { a=10; echo in=$a; } ; echo out=$a
 
@@ -25,26 +26,38 @@ which
 whereis
 
 grep tcp /ect/service | awk '{print $1}' | sort | less
+```
 
-# Named pipe
+## Named pipe
+
+```bash
 mkfifo named_pipe
 echo "Hi" > named_pipe
 cat named_pipe
-> >> 2> 2>>&> &>>
-< > tee [-a]
+\>     >>     2>     2>>     &>     &>>
+< >     tee [-a]
 /dev/null
+```
 
-# Text Filters
-sed cat less head/tail [-f] wc sort uniq split/join
-nl pr fmt expand cut
+## Text Filters
+
+```bash
+sed     cat     less     head/tail [-f]     wc     sort     uniq     split/join
+nl     pr     fmt     expand     cut
 awk
-od paste tr md5sum sha256sum sha512sum bzcat xzcat zcat
+od     paste     tr     md5sum     sha256sum     sha512sum     bzcat     xzcat     zcat
+```
 
-# Edit Text
+## Edit Text
+
+```bash
 sed -n '/^root/p' passwd
 sed -n 's/^root/tuan/p' passwd
+```
 
-# Find text
+## Find text
+
+```bash
 locate [-c] [-A] [-i] [--regexp or --regex] *.png
 locate -S
 sudo updatedb
@@ -54,9 +67,17 @@ find / [-type f]
 find / [-exec stat -c "%s %n" {} \;]
 
 grep [-i] [-v] [-c] [-o] [-r] [-w] [-f filename] [-q] [-x] [-E]
+```
+
+## Regex
+
+```bash
 # BRE
 ^$ .* [abc][!0-9] [:digit/upper/lower/alpha/alnum/space:]
 [:graph/print/punct/cntrl/xdigit:] ()
+```
+
+```bash
 # ERE
 . [] \ () | *+{} ?
 ^$ [^abc]
@@ -65,16 +86,21 @@ grep [-i] [-v] [-c] [-o] [-r] [-w] [-f filename] [-q] [-x] [-E]
 ^(dog|cat)?$
 Backreference:
 (ss).*\1
+```
 
-# =========================
+## ========================= Files =========================
 
+```bash
 /etc/profile
 /etc/profile.d
 ~/.bash_profile
 ~/.bashrc (run /etc/bashrc)
 /etc/bashrc
+```
 
+## ========================= More Practice =================
 
-# =========================
+```bash
 less
 vim
+```
