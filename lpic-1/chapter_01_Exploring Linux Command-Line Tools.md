@@ -1,5 +1,9 @@
 # LPIC-1: Chapter 1: Exploring Linux Command-Line Tools
 
+***Cert Prep: LPIC-1 Exam 101 (Version 5.0)*** : Part 7 & 9
+
+## ========================= Main =========================
+
 ```bash
 mkdir newdir && cd newdir || echo "create dir failed!"
 { echo Hello ; echo Hi; } > tmp
