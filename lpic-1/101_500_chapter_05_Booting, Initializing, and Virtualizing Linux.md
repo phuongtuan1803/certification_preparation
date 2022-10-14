@@ -7,7 +7,17 @@
 ## ========================= MAIN =========================
 
 ```bash
+ps -p 1
+systemctl list-units
+systemctl list-unit-files
+systemctl get-default
+systemctl cat []
+man -k systemd
 
+systemd-delta 
+systemctl daemon-reload
+systemctl restart
+systemctl list-units --type=target
 ```
 
 ## ========================= FILES ========================
