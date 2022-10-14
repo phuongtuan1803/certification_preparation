@@ -78,7 +78,8 @@ grep [-i] [-v] [-c] [-o] [-r] [-w] [-f filename] [-q] [-x] [-E]
 
 ```bash
 # BRE
-^$ .* [abc][!0-9] [:digit/upper/lower/alpha/alnum/space:]
+^$ .* [abc][!0-9]
+[:digit/upper/lower/alpha/alnum/space:]
 [:graph/print/punct/cntrl/xdigit:] ()
 ```
 
