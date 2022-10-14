@@ -1,6 +1,7 @@
 # LPIC-1: Chapter 3: Configuring Hardware
 
 ## ========================= COURSE =======================
+
 ***Cert Prep: LPIC-1 Exam 101 (Version 5.0)*** : Part 1
 
 ## ========================= MAIN =========================

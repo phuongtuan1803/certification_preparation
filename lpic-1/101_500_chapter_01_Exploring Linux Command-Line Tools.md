@@ -1,6 +1,7 @@
 # LPIC-1: Chapter 1: Exploring Linux Command-Line Tools
 
 ## ========================= COURSE =======================
+
 ***Cert Prep: LPIC-1 Exam 101 (Version 5.0)*** : Part 7 & 9
 
 ## ========================= MAIN =========================

@@ -1,6 +1,7 @@
 # LPIC-1: Chapter 2: Managing Software and Processes
 
 ## ========================= COURSE =======================
+
 ***Cert Prep: LPIC-1 Exam 102 (Version 5.0)*** : 
 
 ## ========================= MAIN =========================
