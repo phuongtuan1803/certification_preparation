@@ -43,6 +43,7 @@ sudo yum update kernel
 
 ```bash
 # Initialization stage: systemd
+dmesg
 ps -p 1
 systemctl list-units [-a] [-t service/target] [--state running]
 systemctl list-unit-files [-a] [-t service/target] 

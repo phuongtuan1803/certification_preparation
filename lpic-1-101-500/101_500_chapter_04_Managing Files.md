@@ -8,6 +8,7 @@
 
 ```bash
 # Globbing
+ $ file Project42.txt
 ls /etc/*.conf
 ls /etc/?.conf
 ls /etc/[-a-zA-Z0-9].conf
@@ -38,6 +39,29 @@ ln -s #symbolic link
 stat
 ```
 
+```bash
+# Compressing
+■ gzip  # original file is replaced
+zcat # view
+■ bzip2 # original file is replaced
+bzcat # view
+■ xz    # original file is replaced
+xcat # view
+■ zip
+# Archiving
+# ■ cpio
+$ cpio -itvI Project4x.cpio
+$ cpio -iv --no-absolute-filenames -I Project4x.cpio
+
+# ■ dd
+dd if= INPUT_DEVICE of= OUTPUT-DEVICE [ OPERANDS ] 
+dd if=/dev/sdb of=/dev/sdc status=progress
+
+# ■ tar
+ $ tar -cvf Project4x.tar Project4?.txt
+
+```
+
 ### Permission and Ownership
 
 ```bash
@@ -63,7 +87,7 @@ lsattr a.txt
 
 chown [-r] <user>:<group> file/dir
 chmod 777 a.txt
-chmode u+a a.txt
+chmod u+a a.txt
 umask [-S] # dir default = 777 -umask,  file default = 666 -umask, 
 # SUID 4, SGID 2, Sticky 1
 ```
