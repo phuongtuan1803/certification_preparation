@@ -34,9 +34,6 @@ cd !*
 !!
 ctrl +A
 
-which
-whereis
-
 grep tcp /ect/service | awk '{print $1}' | sort | less
 ```
 

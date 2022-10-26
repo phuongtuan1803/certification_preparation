@@ -94,3 +94,24 @@ The section numbers of the manual followed by the types of pages they contain.
 |---------|----|--------------------------------------------------------------------------------------|
 |         | -k | Search the short descriptions and manual page names                                  |
 |         | -f | Lookup the manual pages referenced and print out the short descriptions of any found |
+
+## Misc
+
+### misc command
+
+| COMMAND |         |                                                                                      |
+|---------|---------|--------------------------------------------------------------------------------------|
+|         | which   | shows the full path of (shell) commands                                              |
+|         | whereis | Locate the binary, source, and manual page files for a command                       |
+|         | whatis  | display manual page descriptions                                                     |
+
+## Named pipe
+
+```bash
+mkfifo named_pipe
+echo "Hi" > named_pipe
+cat named_pipe
+>     >>     2>     2>>     &>     &>>
+< >     tee [-a]
+/dev/null
+```
