@@ -132,26 +132,26 @@ Note:
 | ps       | **report a snapshot of the current processes** |     |     |     |
 |          | **ps [options]**                               |     |     |     |
 |          | **SIMPLE PROCESS SELECTION**                   |     |     |     |
+|          |  -A, -e                                              |     |     |     |
+|          |                                                |     |     |     |
+|          |                                                |     |     |     |
+|          |                                                |     |     |     |
+|          | **PROCESS SELECTION BY LIST**                   |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
-|          | **SIMPLE PROCESS SELECTION**                   |     |     |     |
+|          | **OUTPUT FORMAT CONTROL**                   |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
-|          | **SIMPLE PROCESS SELECTION**                   |     |     |     |
+|          | **OUTPUT MODIFIERS**                   |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
-|          | **SIMPLE PROCESS SELECTION**                   |     |     |     |
-|          |                                                |     |     |     |
-|          |                                                |     |     |     |
-|          |                                                |     |     |     |
-|          |                                                |     |     |     |
-|          | **SIMPLE PROCESS SELECTION**                   |     |     |     |
+|          | **THREAD DISPLAY**                   |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
 |          |                                                |     |     |     |
