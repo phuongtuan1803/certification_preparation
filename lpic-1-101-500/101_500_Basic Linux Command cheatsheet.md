@@ -232,3 +232,5 @@ The section numbers of the manual followed by the types of pages they contain.
 |         | export    | -p    exported variables on current shell<br>-f    export with functions |
 |         |           |                                                                          |
 |         |           |                                                                          |
+
+<!-- TODO: Text filter -->
