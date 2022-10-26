@@ -107,26 +107,6 @@ find / [-exec stat -c "%s %n" {} \;]
 grep [-i] [-v] [-c] [-o] [-r] [-w] [-f filename] [-q] [-x] [-E]
 ```
 
-## Regex
-
-```bash
-# BRE
-^$ .* [abc][!0-9]
-[:digit/upper/lower/alpha/alnum/space:]
-[:graph/print/punct/cntrl/xdigit:] ()
-```
-
-```bash
-# ERE
-. [] \ () | *+{} ?
-^$ [^abc]
-\b \B \< \> \w \W \s \S
-. .? .+ .* .{3} .{3,} .{,3} .{1,3}
-^(dog|cat)?$
-Backreference:
-(ss).*\1
-```
-
 ```bash
 # Environment Variables
 Name Description
