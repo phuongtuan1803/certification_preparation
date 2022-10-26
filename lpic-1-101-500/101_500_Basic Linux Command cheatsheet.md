@@ -1,5 +1,18 @@
 # Basic Linux Command Cheatsheet
 
+## Basic
+
+```bash
+# && execute if previous command done
+# || execute if previous command faile
+mkdir newdir && cd newdir || echo "create dir failed!" 
+
+# (variable scope)
+# {there are no differences}
+a=0; ( a=10; echo in=$a; ) ; echo out=$a
+a=0; { a=10; echo in=$a; } ; echo out=$a
+```
+
 ## ls
 
 | OPTIONS |                    |                                    |                                                         |     |
@@ -19,9 +32,47 @@
 |         | -I                 | --ignore=PATTERN<br>--hide=PATTERN |                                                         |     |
 |         | -n                 | --numeric-uid-gid                  |                                                         |     |
 |         | -1                 |                                    | one file per line                                       |     |
-|         |                    |                                    |                                                         |     |
-|         |                    |                                    |                                                         |     |
-|         |                    |                                    |                                                         |     |
+
+## Find
+## Find text
+
+```bash
+locate [-c] [-A] [-i] [--regexp or --regex] *.png
+locate -S
+sudo updatedb
+
+find / [-user usr_name] [-group gr_name] [-name *bzip2*] [-size +1M] [-mtime -1]
+find / [-type f]
+find / [-exec stat -c "%s %n" {} \;]
+
+```
+
+| COMMANDS | OPTIONS          |               |                                                                                                |                                      |
+| -------- | ---------------- | ------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------ |
+| locate   |                  |               | **locate [OPTION]... PATTERN...**                                                              |                                      |
+| locate   |                  |               | **sudo updatedb** # update database                                                            |                                      |
+|          | -c               | --count       |                                                                                                |                                      |
+|          | -A               | --all         | Print only names which match all non-option arguments                                          |                                      |
+|          | -i               | --ignore-case |                                                                                                |                                      |
+|          | -r               | --regexp      | basic regex                                                                                    |                                      |
+|          |                  | --regex       | extend regex                                                                                   |                                      |
+|          |                  |               |                                                                                                |                                      |
+| find     |                  |               | **find [-H] [-L] [-P] [-D debugopts] [-Olevel] [path...] [expression]**                        |                                      |
+|          | -P               |               | Never  follow  symbolic  links                                                                 |                                      |
+|          | -L               |               | Follow symbolic links.                                                                         |                                      |
+|          | -H               |               | Do not follow symbolic links, except while processing the command line arguments               |                                      |
+|          | -D debugoptions  |               |                                                                                                |                                      |
+|          | -Olevel          |               |                                                                                                |                                      |
+|          | -maxdepth levels |               |                                                                                                |                                      |
+|          | -mindepth levels |               |                                                                                                |                                      |
+|          | -type c          |               | b(block (buffered) special), c(character (unbuffered) special), d(directory), f(regular files) |                                      |
+|          | -name pattern    | n             |                                                                                                |                                      |
+|          | -size xxx        |               | +1M                                                                                            |                                      |
+|          | -user uname      |               |                                                                                                |                                      |
+|          | -group gname     |               |                                                                                                |                                      |
+|          | -perm mode       |               |                                                                                                |                                      |
+|          | -regex pattern   |               |                                                                                                |                                      |
+|          | -exec command ;  |               |                                                                                                | find / [-exec stat -c "%s %n" {} \;] |
 
 ## grep
 
@@ -96,25 +147,32 @@ The section numbers of the manual followed by the types of pages they contain.
 |         | -f  | Lookup the manual pages referenced and print out the short descriptions of any found |
 |         | -S  | man -S 5 passwd # section 5                                                          |
 
-## Misc
+## Text Filters
 
-### misc command
-
-| COMMAND |           |                                                                          |
-| ------- | --------- | ------------------------------------------------------------------------ |
-|         | which     | shows the full path of (shell) commands                                  |
-|         | whereis   | Locate the binary, source, and manual page files for a command           |
-|         | whatis    | display manual page descriptions                                         |
-|         | mkfifo    | make FIFOs (named pipes)                                                 |
-|         | readlink  | print resolved symbolic links or canonical file names                    |
-|         | type      | print type of files                                                      |
-|         | uname     | [-r] [-a]                                                                |
-|         | pwd       | print name of current/working directory                                  |
-|         | prinenv   | print environment variables                                              |
-|         | set/unset | set/unset shell variable <br>set -o posix, not shown function            |
-|         | export    | -p    exported variables on current shell<br>-f    export with functions |
-|         |           |                                                                          |
-|         |           |                                                                          |
+|                                 | command                    | param | description                                         | example                                                    |
+| ------------------------------- | -------------------------- | ----- | --------------------------------------------------- | ---------------------------------------------------------- |
+| File-Combining Commands         | cat                        |       | concatenate files and print on the standard output  |                                                            |
+| File-Transforming Commands      | od [-c] [-b] filename      |       | dump files in octal and other formats               |                                                            |
+|                                 | split                      |       | split a file into pieces                            |                                                            |
+|                                 | join                       |       | join lines of two files on a common field           |                                                            |
+| File-Formatting Commands        | sort                       |       | sort lines of text files                            |                                                            |
+|                                 | nl                         |       | number lines of files                               |                                                            |
+| File-Viewing Commands           | more/less                  |       |                                                     |                                                            |
+|                                 | tail/head [-f]             |       |                                                     |                                                            |
+| File-Summarizing Commands       | wc                         |       | print newline, word, and byte counts for each file  |                                                            |
+|                                 | cut                        |       | remove sections from each line of files             |                                                            |
+|                                 | uniq                       |       | report or omit repeated lines                       |                                                            |
+| Streams, Redirection, and Pipes | sed                        |       | stream editor for filtering and transforming text   | sed -n '/^root/p' passwd<br>sed -n 's/^root/tuan/p' passwd |
+| Misc                            | md5sum/sha256sum/sha512sum |       | compute and check                                   |                                                            |
+|                                 | xargs                      |       | build and execute command lines from standard input |                                                            |
+|                                 | pr                         |       | convert text files for printing                     |                                                            |
+|                                 | fmt                        |       | simple optimal text formatter                       |                                                            |
+|                                 | expand                     |       | convert tabs to spaces                              |                                                            |
+|                                 | awk                        |       | pattern scanning and processing language            |                                                            |
+|                                 | paste                      |       | merge lines of files                                |                                                            |
+|                                 | tr                         |       | translate or delete characters                      |                                                            |
+|                                 | bzcat/xzcat/zcat           |       | decompresses files to stdout                        |                                                            |
+|                                 |                            |       |                                                     |                                                            |
 
 ## History
 
@@ -163,3 +221,23 @@ The section numbers of the manual followed by the types of pages they contain.
 | TZ              | User’s time zone, if different from system’s time zone (Chapter 6)                                                          |
 | UID             | User account’s user identification number (Chapter 7)                                                                       |
 | VISUAL          | Default screen-based editor used by some shell commands (Chapter 1)                                                         |
+
+## Misc
+
+### misc command
+
+| COMMAND |           |                                                                          |
+| ------- | --------- | ------------------------------------------------------------------------ |
+|         | which     | shows the full path of (shell) commands                                  |
+|         | whereis   | Locate the binary, source, and manual page files for a command           |
+|         | whatis    | display manual page descriptions                                         |
+|         | mkfifo    | make FIFOs (named pipes)                                                 |
+|         | readlink  | print resolved symbolic links or canonical file names                    |
+|         | type      | print type of files                                                      |
+|         | uname     | [-r] [-a]                                                                |
+|         | pwd       | print name of current/working directory                                  |
+|         | prinenv   | print environment variables                                              |
+|         | set/unset | set/unset shell variable <br>set -o posix, not shown function            |
+|         | export    | -p    exported variables on current shell<br>-f    export with functions |
+|         |           |                                                                          |
+|         |           |                                                                          |
