@@ -15,7 +15,7 @@ a=0; { a=10; echo in=$a; } ; echo out=$a
 
 ## ls
 
-| OPTIONS |                    |                                    |                                                         |     |
+| OPTIONS |                    | **ls [OPTION]... [FILE]...**       |                                                         |     |
 | ------- | ------------------ | ---------------------------------- | ------------------------------------------------------- | --- |
 |         | -a<br>-A           | --all<br>--almost-all              | <br>without . and ..                                    |     |
 |         | -B                 | --ignore-backups                   | file start with ~                                       |     |
@@ -33,24 +33,15 @@ a=0; { a=10; echo in=$a; } ; echo out=$a
 |         | -n                 | --numeric-uid-gid                  |                                                         |     |
 |         | -1                 |                                    | one file per line                                       |     |
 
+Note:similar BRE without ^$ . ()
+example: ls {*.jpg,*.gif,*.png}
+
 ## Find
-## Find text
-
-```bash
-locate [-c] [-A] [-i] [--regexp or --regex] *.png
-locate -S
-sudo updatedb
-
-find / [-user usr_name] [-group gr_name] [-name *bzip2*] [-size +1M] [-mtime -1]
-find / [-type f]
-find / [-exec stat -c "%s %n" {} \;]
-
-```
 
 | COMMANDS | OPTIONS          |               |                                                                                                |                                      |
 | -------- | ---------------- | ------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------ |
 | locate   |                  |               | **locate [OPTION]... PATTERN...**                                                              |                                      |
-| locate   |                  |               | **sudo updatedb** # update database                                                            |                                      |
+|          |                  |               | **sudo updatedb** # update database                                                            |                                      |
 |          | -c               | --count       |                                                                                                |                                      |
 |          | -A               | --all         | Print only names which match all non-option arguments                                          |                                      |
 |          | -i               | --ignore-case |                                                                                                |                                      |
