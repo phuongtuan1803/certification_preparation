@@ -110,9 +110,25 @@ A partition is a self-contained section within the drive that the operating syst
   - only up to four primary partitions on a drive
   - primary partition can be split into multiple extended partitions.
   - MBR extended partitions are numbered starting at 5
+  - 2 TB
 - UEFI bootloader use GUID Partition Table (GPT)
   - supports up to 128 partitions on a drive
   - partitions starting with number 1
+  - 18 EB
+
+Technology
+
+- BIOS partition
+  - by BIOS
+  - only 4 partition
+  - 1 partition become an extended partition (contains logical drivea)
+  - cannot boot from logical drive
+- GUID partition
+  - GUID partition table (GPT)
+  - no 4 partition, no extented patition, no logical drives
+- LVM partition (Logical Volume Management)
+  - abtraction layer above real patitions or disks
+
 
 ### Automatic Drive Detection
 
@@ -136,10 +152,10 @@ The udev program
 |              | **udevadm monitor [options]**                                                                                                    |     |
 |              | **udevadm test [options] devpath**                                                                                               |     |
 |              | **udevadm test-builtin [options] command devpath**                                                                               |     |
-|              |                                                                                                                                  |
-| dbus-monitor | **debug probe to print message bus messages**                                                                                    |
-|              | **dbus-monitor [--system \| --session \| --address ADDRESS] [--profile \| --monitor \| --pcap \| --binary] [watch expressions]** |
-|              | **ex**: sudo dbus-monitor --system                                                                                               |
+|              |                                                                                                                                  |     |
+| dbus-monitor | **debug probe to print message bus messages**                                                                                    |     |
+|              | **dbus-monitor [--system \| --session \| --address ADDRESS] [--profile \| --monitor \| --pcap \| --binary] [watch expressions]** |     |
+|              | **ex**: sudo dbus-monitor --system                                                                                               |     |
 
 ## Storage Alternatives
 
@@ -156,21 +172,115 @@ Use dynamic /dev/mapper device file directory
 
 Logical Volume Manager
 
-- Volume Group
 - Physical Volume
+- Volume Group
 - Logical Volume
+  
+| LVM               |                   |                   |
+| ----------------- | ----------------- | ----------------- |
+| Disk A            | Disk A            | Disk B            |
+| Physical Volume 1 | Physical Volume 2 | Physical Volume 3 |
+| Volume Group 1    | Volume Group 2    | Volume Group 2    |
+| Logical Volume 1  | Logical Volume 2  | Logical Volume 3  |
 
-| COMMANDS | OPTIONS                                                                  |     |
-| -------- | ------------------------------------------------------------------------ | --- |
-| pvcreate | **Initialize physical volume(s) for use by LVM**                         |     |
-|          | **pvcreate position_args [ option_args ]**                               |     |
-|          |                                                                          |     |
-| vgcreate | **Create a volume group**                                                |     |
-|          | **vgcreate position_args [ option_args ]**                               |     |
-|          |                                                                          |     |
-| lvcreate | **Create a logical volume**                                              |     |
-|          | **lvcreate option_args position_args [ option_args ] [ position_args ]** |     |
-|          |                                                                          |     |
+| COMMANDS  | OPTIONS                                                                  |     |
+| --------- | ------------------------------------------------------------------------ | --- |
+| pvcreate  | **Initialize physical volume(s) for use by LVM**                         |     |
+|           | **pvcreate position_args [ option_args ]**                               |     |
+|           | **ex:** pvcreate /dev/sdc4 /dev/sde                                      |     |
+|           |                                                                          |     |
+| vgcreate  | **Create a volume group**                                                |     |
+|           | **vgcreate position_args [ option_args ]**                               |     |
+|           | **ex:** vgcreate myvg /dev/sdk1 /dev/sdl1                                |     |
+|           |                                                                          |     |
+| lvcreate  | **Create a logical volume**                                              |     |
+|           | **lvcreate option_args position_args [ option_args ] [ position_args ]** |     |
+|           | **ex:** lvcreate -n projects -L 10G vg0                                  |     |
+|           | **ex:** lvcreate -n backups -l 100%FREE vg0                              |     |
+|           | -n, --name String                                                        |     |
+|           | -l, --extents Number[PERCENT]                                            |     |
+|           | -L, --size Size[m\|UNIT]                                                 |     |
+|           |                                                                          |     |
+| pvs       | **Display information about physical volumes**                           |     |
+| vgs       | **Display information about volume groups**                              |     |
+| lvs       | **Display information about logical volumes**                            |     |
+| pvdisplay | **Display various attributes of physical volume(s)**                     |     |
+| vgdisplay | **Display volume group information**                                     |     |
+| lvdisplay | **Display information about a logical volume**                           |     |
+
+**NOTE:**
+
+- Guide for parted command: $ sudo parted
+    1. print all
+    2. print devices
+    3. select /dev/sdc
+    4. mklabel msdos
+    5. mkpart primary 1 500MB
+    6. quit
+
+- Guide for resize a partition
+    1. note of old partition boundaries
+      sudo mkdir /media/sdb1
+      sudo mount /dev/sdb1 /media/sdb1
+      lsblk
+    2. delete old partition
+    3. create new larger partition
+    4. resize the file system
+      sudo gdisk /dev/sdb
+          - p # print
+          - d
+          - n
+          - w
+      sudo umount /dev/sdb1
+      sudo partprobe
+      sudo mkfs -t ext4 /dev/sdb1
+      sudo mount /dev/sdb1 /media/sdb1
+
+    5. verify
+      lsblk
+      df -h
+      resize2fs /dev/sdb1
+
+- Guild for create Logical Volume of LVM:
+
+    sudo umount /dev/sdb1
+    sudo pvcreate /dev/sdb1
+    sudo pvs
+    sudo vgcreate vgdata /dev/sdb1
+    sudo vgs
+    sudo lvcreate --name lvdata --size 500M vgdata
+    sudo lvs
+    
+    sudo mkfs -t ext4 /dev/vgdata/lvdata
+    sudo blkid
+
+- Guild for extend Volume Group of LVM:
+    sudo vgextend vgdata /dev/sdc1
+    sudo vgresize -l 100%FREE /dev/vgdata/lvdata
+    resize2fs /dev/vgdata/lvdata
+
+- Guild for reduce Volume Group of LVM:
+    sudo umount /dev/vgdata/lvdata
+    sudo e2fsck -ff /dev/vgdata/lvdata
+
+    sudo resize2fs /dev/vgdata/lvdata 500M
+    sudo lvresize -L 500M /dev/vgdata/lvdata
+    sudo mount /dev/vgdata/lvdata /media/lvdata
+
+    sudo lvresize -r -L 400M /dev/vgdata/lvdata
+    df -h
+    sudo lvresize -r -L 600M /dev/vgdata/lvdata
+    df -h
+
+- Guild for Replace physiscal Volume of LVM:
+    sudo lvresize -r -l 100%VG /dev/vgdata/lvdata
+    sudo pvmov /dev/sdc1 /dev/sdd1
+    sudo pvreduce vgdata /dev/sdc1
+
+- backup
+    sudo dump -0uf /home/lvdata.dump /dev/vgdata/lvdata
+    sudo dump -0uf /home/lvdata.dump /dev/vgdata/lvdata | ssh user@hostname "dd of=lvdata.dump"
+    sudo restore -rf /home/lvdata.dump
 
 ### Redundant Array of Inexpensive Disks (RAID) Technology
 
@@ -178,21 +288,35 @@ RAID technology allows you to improve data access performance and reliability, a
 
 ### Partitioning Tools
 
-| COMMANDS | OPTIONS                                                                |     |
-| -------- | ---------------------------------------------------------------------- | --- |
-| fdisk    | **manipulate disk partition table**                                    |     |
-|          | **fdisk [-uc] [-b sectorsize] [-C cyls] [-H heads] [-S sects] device** |     |
-|          | **fdisk -l [-u] [device...]**                                          |     |
-|          | **fdisk -s partition...**                                              |     |
-|          | **fdisk -v**                                                           |     |
-|          | **fdisk -h**                                                           |     |
-|          |                                                                        |     |
-| gdisk    | **Interactive GUID partition table (GPT) manipulator**                 |     |
-|          | **gdisk [ -l ] device**                                                |     |
-|          |                                                                        |     |
-| parted   | **a partition manipulation program**                                   |     |
-|          | **parted [options] [device [command [options...]...]]**                |     |
-|          |                                                                        |     |
+| COMMANDS  | OPTIONS                                                                    |                                                |
+| --------- | -------------------------------------------------------------------------- | ---------------------------------------------- |
+| fdisk     | **manipulate disk partition table**                                        |                                                |
+|           | **fdisk [-uc] [-b sectorsize] [-C cyls] [-H heads] [-S sects] device**     |                                                |
+|           | **fdisk -l [-u] [device...]**                                              |                                                |
+|           | **fdisk -s partition...**                                                  |                                                |
+|           | **fdisk -v**                                                               |                                                |
+|           | **fdisk -h**                                                               |                                                |
+|           | **ex:** fdisk /dev/sda                                                     |                                                |
+|           | -l device                                                                  | List the partition tables                      |
+|           |                                                                            |                                                |
+| gdisk     | **Interactive GUID partition table (GPT) manipulator**                     |                                                |
+|           | **gdisk [ -l ] device**                                                    |                                                |
+|           | **ex:** gdisk /dev/sda                                                     |                                                |
+|           | -l device                                                                  | List the partition tables                      |
+|           |                                                                            |                                                |
+| parted    | **a partition manipulation program**                                       |                                                |
+|           | **parted [options] [device [command [options...]...]]**                    |                                                |
+|           | **ex:** parted /dev/sda                                                    |                                                |
+|           |                                                                            |                                                |
+| partprobe | **inform the OS of partition table changes**                               |                                                |
+|           | **partprobe [-d] [-s] [devices...]**                                       |                                                |
+|           | -d                                                                         | Don't update the kernel                        |
+|           | -s                                                                         | Show a summary of devices and their partitions |
+|           |                                                                            |                                                |
+| sfdisk    | **partition table manipulator for Linux**                                  |                                                |
+| cfdisk    | **display or manipulate disk partition table**                             |                                                |
+| sgdisk    | **Command-line GUID partition table (GPT) manipulator for Linux and Unix** |                                                |
+| cgdisk    | **Curses-based GUID partition table (GPT) manipulator**                    |                                                |
 
 ## Filesystems
 
@@ -261,7 +385,7 @@ Non-Linux Filesystems
 |          | **ex**:  mount -t ext4 /dev/sdb1 /media/usb1             |                                                                |
 |          | -a, --all                                                | Mount all filesystems (of the given types) mentioned in fstab. |
 |          |                                                          |                                                                |
-| umount   | **unmount a filesystem**                                 |
+| umount   | **unmount a filesystem**                                 |                                                                |
 |          | **umount [-hV]**                                         |                                                                |
 |          | **umount -a [-dflnrv] [-t vfstype] [-O options]**        |                                                                |
 |          | **umount [-dflnrv] {dir\|device}...**                    |                                                                |
@@ -317,10 +441,17 @@ debugfs : Manually view and modify the filesystem structure, such as undeleting 
 dumpe2fs : Display block and superblock group information
 e2label : Change the label on the filesystem
 resize2fs : Expand or shrink a filesystem
-tune2fs : Modify filesystem parameters 
+tune2fs : Modify filesystem parameters
 
-| COMMANDS | OPTIONS                                                                                  |     |
-| -------- | ---------------------------------------------------------------------------------------- | --- |
-| fsck     | **check and repair a Linux filesystem**                                                  |     |
-|          | **fsck [-lrsAVRTMNP] [-C [fd]] [-t fstype] [filesystem...]  [--] [fs-specific-options]** |     |
-|          | **ex**: sudo fsck -f /dev/sdb1                                                           |     |
+| COMMANDS | OPTIONS                                                                                  |                                             |
+| -------- | ---------------------------------------------------------------------------------------- | ------------------------------------------- |
+| fsck     | **check and repair a Linux filesystem**                                                  |                                             |
+|          | **fsck [-lrsAVRTMNP] [-C [fd]] [-t fstype] [filesystem...]  [--] [fs-specific-options]** |                                             |
+|          | **ex**: sudo fsck -f /dev/sdb1                                                           |                                             |
+|          | -A                                                                                       | check all filesystemsin /etc/fstab          |
+|          | -R                                                                                       | with the -A flag, skip the root filesystem. |
+|          | -a                                                                                       | Automatically  repair                       |
+|          | -y                                                                                       | attempt to fix                              |
+|          | -n                                                                                       | attempt to not fix                          |
+|          |                                                                                          |                                             |
+|          |                                                                                          |                                             |

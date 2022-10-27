@@ -28,6 +28,34 @@
 | /etc/modules-load.d/                        |                                     |
 | /etc/modprobe.d/                            |                                     |
 | /etc/sysconfig/network-scripts/ifcfg-enp0s3 |                                     |
+BIOS
+/flashboot/grub2/grub.cfg
+GRUB
+/etc/default/grub
+/etc/grub.d
+/boot/grub/grub.cfg (generate by grub2-mkconfig)
+/boot/grub2/grub.cfg (generate by grub2-mkconfig)
+systemd
+/etc/systemd/system/default.target
+/etc/systemd/system/graphical.target
+/etc/systemd/system/multi-user.target
+journald
+/var/run
+/var/log/journal
+Kickstart
+/root/anaconda-ks.cfg
+Partition
+/proc/partitions
+/dev/<VolumeGroupName>/<LogiccalVolumeName>
+/dev/mapper/<VolumeGroupName>-<LogiccalVolumeName>
+example:
+    /dev/vgdata/lvdata
+    /dev/mapper/vgdata-lvdata
+filesystem
+/sbin/mk*
+/etc/fstab 
+UUID=<ID>    /media/lvdata    ext3    default    0    0
+LABEL=<label>    /media/lvdata    ext3    default    0    0
 
 
 ## ========================= PRACTICE ====================
@@ -41,11 +69,15 @@
 | screen -ls         |                        |
 | w                  |                        |
 | man nmcli-examples |                        |
+| systemd            |                        |
+| rsyslog            |                        |
+| journalctl         |                        |
+| logger             |                        |
 
 ## ========================= MISC ====================
 
 | ls        | **list directory contents**                                             |     |
-| lsattr    | **list file attributes on a Linux second extended file system**         |     |
+| l-------r | *---------------------------------------------------------------------* | undefined- |
 | lstat     | **get file status**                                                     |     |
 | lstat64   | **get file status**                                                     |     |
 | lstat     | **get symbolic link status**                                            |     |
