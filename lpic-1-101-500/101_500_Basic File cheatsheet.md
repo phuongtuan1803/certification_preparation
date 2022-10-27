@@ -23,8 +23,12 @@
 
 ## ========================= PRACTICE ====================
 
-| FEATURE        |     |
-| -------------- | --- |
-| less           |     |
-| emacs/nano/vim |     |
+| FEATURE        |                        |
+| -------------- | ---------------------- |
+| less           |                        |
+| emacs/nano/vim |                        |
+| top            |                        |
+| tmux           | Multiplexing with tmux |
+| screen -ls     |                        |
+| w              |                        |
 
