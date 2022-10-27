@@ -1,0 +1,9 @@
+# Network Interface
+nmtui
+nmcli c reload
+nmcli dev disconnect enp0s3
+nmcli dev up enp0s3
+nmcli con show [--active]
+nmcli general status
+nmcli con edit
+man nmcli-examples
