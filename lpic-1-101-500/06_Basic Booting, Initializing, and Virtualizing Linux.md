@@ -1,5 +1,26 @@
 # Basic Booting, Initializing, and Virtualizing Linux
 
+| COMMANDS          | OPTIONS                           |     |
+| ----------------- | --------------------------------- | --- |
+| grub2-install     |                                   |     |
+| grub2-mkconfig    |                                   |     |
+| grub2-set-default |                                   |     |
+| systemctl         |                                   |     |
+|                   | list-units                        |     |
+|                   | list-unit-files                   |     |
+|                   | cat/is-active/is-enabled          |     |
+|                   | start/stop/restart/disable/enable |     |
+|                   | mark/unmark                       |     |
+|                   | get-default                       |     |
+|                   | set-default                       |     |
+|                   | isolate                           |     |
+|                   | daemon-reload                     |     |
+|                   |                                   |     |
+|                   |                                   |     |
+| systemd-delta     |                                   |     |
+|                   |                                   |     |
+| journalctl        |                                   |     |
+
 ```bash
 # Boot Process
 # 1. Firmware stage: 
